@@ -3,11 +3,12 @@ import Wrapper from "./Wrapper";
 import Link from "next/link";
 import Menu from "./Menu";
 import MenuMobile from "./MenuMobile";
-
+import nav from '../components/assests/png-clipart-shopping-cart-boot-sandal-shopping-cart-text-orange.png'
 import { IoMdHeartEmpty } from "react-icons/io";
 import { BsCart } from "react-icons/bs";
 import { BiMenuAltRight } from "react-icons/bi";
 import { VscChromeClose } from "react-icons/vsc";
+import Image from "next/image";
 const Navbar = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showCatMenu, setShowCatMenu] = useState(false);
@@ -41,10 +42,11 @@ const Navbar = () => {
     >
       <Wrapper className="h-[60px] flex justify-between items-center">
         <Link href="/">
-          <img
+          {/* <img
             src="/yenn-cart-client/public/png-clipart-shopping-cart-boot-sandal-shopping-cart-text-orange.png"
             className="w-[40px] md:w-[60px]"
-          />
+          /> */}
+          <Image src={nav} className="w-[30px] md:w-[50px]"  />
         </Link>
 
         <Menu showCatMenu={showCatMenu}

@@ -1,9 +1,12 @@
 import React from "react";
-
+import slide1 from '../components/assests/slide-1.png'
+import slide2 from '../components/assests/slide-2.png'
+import slide3 from '../components/assests/slide-3.png'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
 
 import { BiArrowBack } from "react-icons/bi";
+import Image from "next/image";
 
 const HeroBanner = () => {
     return (
@@ -32,30 +35,21 @@ const HeroBanner = () => {
                 )}
             >
                 <div>
-                    <img
-                        src="/components/assests/slide-1.png"
-                        className="aspect-[16/10] md:aspect-auto object-cover"
-                    />
+                    <Image className="aspect-[16/10] md:aspect-auto object-cover" src={slide1} />
+                    <div className="px-[15px] md:px-[40px] py-[10px] md:py-[25px] font-oswald bg-white absolute bottom-[25px] md:bottom-[75px] left-0 text-black/[0.9] text-[15px] md:text-[30px] uppercase font-medium cursor-pointer hover:opacity-90">
+                        Shop now
+                    </div>
+                </div>
+                <div>
+                    <Image className="aspect-[16/10] md:aspect-auto object-cover" src={slide2} />
                     <div className="px-[15px] md:px-[40px] py-[10px] md:py-[25px] font-oswald bg-white absolute bottom-[25px] md:bottom-[75px] left-0 text-black/[0.9] text-[15px] md:text-[30px] uppercase font-medium cursor-pointer hover:opacity-90">
                         Shop now
                     </div>
                 </div>
 
                 <div>
-                    <img
-                        src="/slide-2.png"
-                        className="aspect-[16/10] md:aspect-auto object-cover"
-                    />
-                    <div className="px-[15px] md:px-[40px] py-[10px] md:py-[25px] font-oswald bg-white absolute bottom-[25px] md:bottom-[75px] left-0 text-black/[0.9] text-[15px] md:text-[30px] uppercase font-medium cursor-pointer hover:opacity-90">
-                        Shop now
-                    </div>
-                </div>
 
-                <div>
-                    <img
-                        src="/slide-3.png"
-                        className="aspect-[16/10] md:aspect-auto object-cover"
-                    />
+                    <Image className="aspect-[16/10] md:aspect-auto object-cover" src={slide3} />
                     <div className="px-[15px] md:px-[40px] py-[10px] md:py-[25px] font-oswald bg-white absolute bottom-[25px] md:bottom-[75px] left-0 text-black/[0.9] text-[15px] md:text-[30px] uppercase font-medium cursor-pointer hover:opacity-90">
                         Shop now
                     </div>
