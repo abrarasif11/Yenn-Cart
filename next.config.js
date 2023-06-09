@@ -2,10 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   eslint: {
-    ignoreDuringBuilds: true,
+      ignoreDuringBuilds: true,
   },
   images: {
-    domains: ["res.cloudinary.com"],
+      domains: ["res.cloudinary.com"],
   },
 };
 
