@@ -1,17 +1,37 @@
 import ProductDetailsCarousel from '@/components/ProductDetailsCarousel';
 import RelatedProducts from '@/components/RelatedProducts';
 import Wrapper from '@/components/Wrapper';
+import { addToCart } from '@/store/cartSlice';
 import { fetchDataFromApi } from '@/utils/api';
 import { getDiscountedPricePercentage } from '@/utils/helper';
 import React, { useState } from 'react'
 import { IoMdHeartEmpty } from "react-icons/io";
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import { useSelector, useDispatch } from 'react-redux'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const ProductDetails = ({ product, products }) => {
     const [selectedSize, setSelectedSize] = useState();
     const [showError, setShowError] = useState(false);
+    const dispatch = useDispatch()
     const p = product?.data?.[0]?.attributes;
+
+    const notify = () => {
+        toast.success('Cart Added Successfully!', {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            });
+    }
     return (
         <div className='w-full md:py-20'>
+            <ToastContainer></ToastContainer>
             <Wrapper>
                 <div className="flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]">
                     {/* Left col start */}
@@ -113,6 +133,15 @@ const ProductDetails = ({ product, products }) => {
                                     block: "center",
                                     behavior: "smooth"
                                 })
+                            } else {
+                                dispatch(
+                                    addToCart({
+                                        ...product?.data?.[0],
+                                        selectedSize,
+                                        oneQuantityPrice: p.price,
+                                    })
+                                );
+                                    notify()
                             }
                         }}
                         >
