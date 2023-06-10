@@ -4,28 +4,36 @@ import Link from "next/link";
 import Wrapper from "@/components/Wrapper";
 import CartItem from "@/components/CartItem";
 import cart from '../public/empty-cart.jpg'
+import { useSelector } from "react-redux";
+
 const Cart = () => {
+    const {cartItems} = useSelector((state => state.cart))
     return (
         <div className="w-full md:py-20">
             <Wrapper>
-                {/* HEADING AND PARAGRAPH START */}
-                <div className="text-center max-w-[800px] mx-auto mt-8 md:mt-0">
-                    <div className="text-[28px] md:text-[34px] mb-5 font-semibold leading-tight">
-                        Shopping Cart
-                    </div>
-                </div>
-                {/* HEADING AND PARAGRAPH END */}
+            {cartItems.length > 0 && (
+                    <>
+                        {/* HEADING AND PARAGRAPH START */}
+                        <div className="text-center max-w-[800px] mx-auto mt-8 md:mt-0">
+                            <div className="text-[28px] md:text-[34px] mb-5 font-semibold leading-tight">
+                                Shopping Cart
+                            </div>
+                        </div>
+                        {/* HEADING AND PARAGRAPH END */}
 
-                {/* CART CONTENT START */}
-                <div className='flex flex-col lg:flex-row gap-12 py-10'>
-                    {/*Card Items Start*/}
-                    <div className='flex-[2]'>
-                        <div className='text-lg font-bold'>Cart Items</div>
-                        <CartItem></CartItem>
-                        <CartItem></CartItem>
-                        <CartItem></CartItem>
-                    </div>
-                    {/*Card Items End*/}
+                        {/* CART CONTENT START */}
+                        <div className="flex flex-col lg:flex-row gap-12 py-10">
+                            {/* CART ITEMS START */}
+                            <div className="flex-[2]">
+                                <div className="text-lg font-bold">
+                                    Cart Items
+                                </div>
+                                {cartItems.map((item) => (
+                                    <CartItem key={item.id} data={item} />
+                                ))}
+                            </div>
+                            {/* CART ITEMS END */}
+
                     <div className='flex-[1]'>
                         <div className='text-lg font-bold'>
                             Summery
@@ -50,6 +58,8 @@ const Cart = () => {
                     {/* Summery Start */}
                 </div>
                 {/* CART CONTENT END */}
+                </>
+                 )}
                 <div className="flex-[2] flex flex-col items-center pb-[50px] md:-mt-14">
                     <Image
                         src={cart}
