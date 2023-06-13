@@ -1,17 +1,40 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import Image from "next/image";
 import Link from "next/link";
 import Wrapper from "@/components/Wrapper";
 import CartItem from "@/components/CartItem";
 import cart from '../public/empty-cart.jpg'
 import { useSelector } from "react-redux";
+import { loadStripe } from "@stripe/stripe-js";
+import { makePaymentRequest } from '@/utils/api';
 
+const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+);
 const Cart = () => {
+    const [loading, setLoading] = useState(false);
     const {cartItems} = useSelector((state => state.cart))
 
     const subTotal = useMemo(() => {
         return cartItems.reduce((total, val) => total + val.attributes.price, 0)
-    }, [cartItems])
+    }, [cartItems]);
+
+    const handlePayment = async () => {
+        try {
+            setLoading(true);
+            const stripe = await stripePromise;
+            const res = await makePaymentRequest("/api/orders", {
+                products: cartItems,
+            });
+            await stripe.redirectToCheckout({
+                sessionId: res.stripeSession.id,
+            });
+        } catch (error) {
+            setLoading(false);
+            console.log(error);
+        }
+    };
+
     return (
         <div className="w-full md:py-20">
             <Wrapper>
@@ -55,8 +78,9 @@ const Cart = () => {
                                 international transaction fees.
                             </div>
                         </div>
-                        <button className="w-full py-4 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75">
+                        <button className="w-full py-4 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75 flex items-center gap-2 justify-center" onClick={handlePayment}>
                             Checkout
+                            {loading && <img src='/public/spinner.svg'/>}
                         </button>
                     </div>
                     {/* Summery Start */}
@@ -64,26 +88,30 @@ const Cart = () => {
                 {/* CART CONTENT END */}
                 </>
                  )}
-                <div className="flex-[2] flex flex-col items-center pb-[50px] md:-mt-14">
-                    <Image
-                        src={cart}
-
-                    />
-                    <span className="text-xl font-bold">
-                        Your cart is empty
-                    </span>
-                    <span className="text-center mt-4">
-                        Looks like you have not added anything in your cart.
-                        <br />
-                        Go ahead and explore top categories.
-                    </span>
-                    <Link
-                        href="/"
-                        className="py-4 px-8 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75 mt-8"
-                    >
-                        Continue Shopping
-                    </Link>
-                </div>
+               {cartItems.length < 1 && (
+                    <div className="flex-[2] flex flex-col items-center pb-[50px] md:-mt-14">
+                        <Image
+                            src="/empty-cart.jpg"
+                            width={300}
+                            height={300}
+                            className="w-[300px] md:w-[400px]"
+                        />
+                        <span className="text-xl font-bold">
+                            Your cart is empty
+                        </span>
+                        <span className="text-center mt-4">
+                            Looks like you have not added anything in your cart.
+                            <br />
+                            Go ahead and explore top categories.
+                        </span>
+                        <Link
+                            href="/"
+                            className="py-4 px-8 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75 mt-8"
+                        >
+                            Continue Shopping
+                        </Link>
+                    </div>
+                )}
             </Wrapper>
         </div>
     )
