@@ -1,9 +1,8 @@
-import { updateCart } from '@/store/cartSlice';
+import { updateCart, removeFromCart } from '@/store/cartSlice';
 import Image from 'next/image';
 import React from 'react'
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useDispatch } from 'react-redux';
-// import img1 from '../components/assests/product-1.webp'
 const CartItem = ({ data }) => {
     const p = data.attributes;
     
@@ -102,7 +101,9 @@ const CartItem = ({ data }) => {
                             </select>
                         </div>
                     </div>
-                    <RiDeleteBin6Line className="cursor-pointer text-black/[0.5] hover:text-black text-[16px] md:text-[20px]"></RiDeleteBin6Line>
+                    <RiDeleteBin6Line 
+                    onClick={() => dispatch(removeFromCart({id: data.id}))}
+                    className="cursor-pointer text-black/[0.5] hover:text-black text-[16px] md:text-[20px]"></RiDeleteBin6Line>
                 </div>
             </div>
         </div>
