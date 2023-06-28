@@ -40,7 +40,7 @@ const CartItem = ({ data }) => {
                     </div>
                     {/* Product Price */}
                     <div className='text-sm md:text-md font-bold text-black mt-2'>
-                        MRP : &#8377;{p.price}
+                        Price : &#x09F3;{p.price}
                     </div>
                 </div>
 

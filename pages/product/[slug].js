@@ -56,7 +56,7 @@ const ProductDetails = ({ product, products }) => {
                         {/* PRODUCT PRICE */}
                         <div className="flex items-center">
                             <p className="mr-2 text-lg font-semibold">
-                                MRP : &#x09F3;{p.price}
+                                Price : &#x09F3;{p.price}
                             </p>
                             {p.original_price && (
                                 <>
