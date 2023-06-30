@@ -27,7 +27,7 @@ const ProductDetails = ({ product, products }) => {
             draggable: true,
             progress: undefined,
             theme: "dark",
-            });
+        });
     }
     return (
         <div className='w-full md:py-20'>
@@ -61,7 +61,7 @@ const ProductDetails = ({ product, products }) => {
                             {p.original_price && (
                                 <>
                                     <p className="text-base  font-medium line-through">
-                                    &#x09F3;{p.original_price}
+                                        &#x09F3;{p.original_price}
                                     </p>
                                     <p className="ml-auto text-base font-medium text-green-500">
                                         {getDiscountedPricePercentage(
@@ -104,6 +104,7 @@ const ProductDetails = ({ product, products }) => {
                                     `}
                                         onClick={() => {
                                             setSelectedSize(item.size)
+
                                             setShowError(false)
                                         }}
                                     >
@@ -126,49 +127,41 @@ const ProductDetails = ({ product, products }) => {
 
                         {/* ADD TO CART BUTTON START */}
                         <button className="w-full py-4 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75"
-                        onClick={()=> {
-                            if(!selectedSize) {
-                                setShowError(true)
-                                document.getElementById("sizesGrid").scrollIntoView({
-                                    block: "center",
-                                    behavior: "smooth"
-                                })
-                            } else {
-                                dispatch(
-                                    addToCart({
-                                        ...product?.data?.[0],
-                                        selectedSize,
-                                        oneQuantityPrice: p.price,
+                            onClick={() => {
+                                if (!selectedSize) {
+                                    setShowError(true)
+                                    document.getElementById("sizesGrid").scrollIntoView({
+                                        block: "center",
+                                        behavior: "smooth"
                                     })
-                                );
+                                } else {
+                                    dispatch(
+                                        addToCart({
+                                            ...product?.data?.[0],
+                                            selectedSize,
+                                            oneQuantityPrice: p.price,
+                                        })
+                                    );
                                     notify()
-                            }
-                        }}
+                                }
+                            }}
                         >
                             Add to Cart
                         </button>
                         {/* ADD TO CART BUTTON END */}
-
-                        {/* WHISHLIST BUTTON START */}
-                        <button className="w-full py-4 rounded-full border border-black text-lg font-medium transition-transform active:scale-95 flex items-center justify-center gap-2 hover:opacity-75 mb-10">
-                            Whishlist
-                            <IoMdHeartEmpty size={20} />
-                        </button>
-                        {/* WHISHLIST BUTTON END */}
-
                         <div>
                             <div className="text-lg font-bold mb-5">
                                 Product Details
                             </div>
                             <div className='markdown text-md mb-5'>
-                            <ReactMarkdown>{p.description}</ReactMarkdown>
+                                <ReactMarkdown>{p.description}</ReactMarkdown>
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
                 <RelatedProducts
-                products={products}
+                    products={products}
                 ></RelatedProducts>
             </Wrapper>
         </div>
