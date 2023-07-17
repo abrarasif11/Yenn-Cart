@@ -95,7 +95,6 @@ const CartItem = ({ data }) => {
                                         >
                                             {q}
                                         </option>
-
                                     )
                                 })}
                             </select>
